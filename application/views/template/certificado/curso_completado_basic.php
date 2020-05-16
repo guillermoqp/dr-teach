@@ -13,7 +13,7 @@
 		       <span style="font-size:20px">con un porcentaje de aprobacion de <b> <?php print($resultado) ?>%</b></span> <br/><br/><br/><br/>
 		       <b>Código Certificado</b><br><?php print($codigo) ?><br/><br/><br/>
 		       <span style="font-size:25px"><i></i></span><?php print($preFirma) ?><br><br>
-		    <center><span style="font-size:12px"><img src="static/certificado/img/firmaJGQP.png"/><?php print($firma) ?></span></center>  
+		    <center><span style="font-size:12px"><img src="<?php print(base_url("static/certificado/img/firmaJGQP.png")) ?>"/><?php print($firma) ?></span></center>
 		</div>
 	</div>
 </body>
