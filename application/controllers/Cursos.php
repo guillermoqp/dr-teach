@@ -160,7 +160,8 @@
                 );
                 //VISTAS : template/certificado/curso_completado , curso_completado_basic
                 //$this->pdf->load_view("template/certificado/curso_completado",$datosCertificado,"Certificado_".$nombreCurso);
-                var_dump($datosCertificado);
+                //var_dump($datosCertificado);
+                $this->load->view("template/certificado/curso_completado",$datosCertificado);
             } else {
                 $this->session->set_flashdata("error","Error, aun no ha generado un Certificado.");
                 redirect(base_url("cursos/".$codigoCurso));
