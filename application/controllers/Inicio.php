@@ -86,7 +86,7 @@
     public function verificarAcceso() {
         desactivar_errores();
         $ajax = $this->input->get("ajax");
-        $this->load->library("encrypt");
+        $this->load->library("encryption");
         $email = $this->input->post("email");
         $password = sha1($this->input->post("password"));
         $recordarme = $this->input->post("recordarme");
