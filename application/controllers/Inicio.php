@@ -7,7 +7,7 @@
         $this->load->library("recaptcha");
         $this->load->helper("session");
         $this->load->helper("utilitarios");
-        $this->load->helper("guidV4");
+        $this->load->helper("guidv4");
         $this->load->helper("captcha");
     }
     public function index() {
