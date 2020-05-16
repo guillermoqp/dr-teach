@@ -1,7 +1,7 @@
 var url_base=(localStorage)?localStorage.getItem("url_base_dr-teach"):sessionStorage.getItem("url_base_dr-teach");
 var url_inicio=url_base+"inicio/";
 var url_verificarAcceso=url_base+"verificarAcceso?ajax=true";
-var url_reestablecerPassword=url_base+"reestablecerPassword?ajax=true";
+var url_reestablecerPassword=url_base+"reestablecerPassword";
 var url_registrarUsuario=url_base+"registrarUsuario?ajax=true";
 function limpiarInputs() {
     $("#nombres").val("");

@@ -106,17 +106,15 @@
     }
     public function reestablecerPassword() {
         desactivar_errores();
-        $ajax = $this->input->get("ajax");
-        $email = $this->input->post("recuperar_email");
-        $usuario = $this->usuario_model->validar_usuario_email($email);
-        if (isset($email) && $email != "" && strcasecmp($usuario["email"], $email) == 0) {
-            $fechaActual = new DateTime("NOW");
-            $fechaGenCodigo = new DateTime($usuario["forgot_password_date"]);
-            $dias = $fechaGenCodigo->diff($fechaActual)->format("%a");
-            if (($usuario["forgot_password_code"] == "" && $usuario["forgot_password_date"] == "") ||
-                    ($dias >= 1)) {
+        $email=$this->input->post("recuperar_email");
+        $usuario=$this->usuario_model->validar_usuario_email($email);
+        if (isset($email) && $email != "" && strcasecmp($usuario["email"],$email)==0) {
+            $fechaActual=new DateTime("NOW");
+            $fechaGenCodigo=new DateTime($usuario["forgot_password_date"]);
+            $dias=$fechaGenCodigo->diff($fechaActual)->format("%a");
+            if (($usuario["forgot_password_code"]==""&&$usuario["forgot_password_date"]=="")||($dias>=1)) {
                 //enviar correo de cambio de password.
-                ini_set("max_execution_time", 0);
+                ini_set("max_execution_time",0);
                 ini_set("memory_limit", "2048M");
                 $this->load->library("emailnotificaciones_cls");
                 $asunto = "Re-establecimiento de Contraseña en Dr-Teach.";
@@ -130,13 +128,13 @@
                     "urlAcceso" => base_url(),
                     "emailAdmin" => $this->config->item("email"),
                 );
-                $emails = array($email);
-                $envio_email = $this->emailnotificaciones_cls->enviar_mail_reestablecer_password($emails, $asunto, $cuerpo);
-                if ($envio_email && $ajax == true) {
-                    $exito = $this->usuario_model->generar_cambio_password($usuario["id_usuario"], $forgot_password_code);
-                    $json = array("resultado" => true, "mensaje" => "Éxito se envio un email para reestablecer Password a : " . $email);
+                $emails=array($email);
+                $envio_email=$this->emailnotificaciones_cls->enviar_mail_reestablecer_password($emails,$asunto,$cuerpo);
+                if ($envio_email==TRUE) {
+                    $exito=$this->usuario_model->generar_cambio_password($usuario["id_usuario"], $forgot_password_code);
+                    $json=array("resultado"=>true, "mensaje" => "Éxito se envio un email para reestablecer Password a : " . $email);
                 } else {
-                    $json = array("resultado" => false, "mensaje" => "No es por Ajax.Por favor inténtelo nuevamente o sírvase comunicarse con el administrador del Sistema.");
+                    $json = array("resultado" => false, "mensaje" => "Ocurrio un error al re-establecer Password. Detalle: ".$envio_email." Por favor inténtelo nuevamente o sírvase comunicarse con el administrador del Sistema.");
                 }
             } else {
                 $json = array("resultado" => false, "mensaje" => "Ya se ha enviado un mail de Re-Establecimiento de Password, el cual tiene un Código de Expiración de 1 dia.");

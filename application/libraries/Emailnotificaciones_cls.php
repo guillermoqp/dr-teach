@@ -9,19 +9,23 @@ Class Emailnotificaciones_cls {
         $this->usuarioEmail=$this->CI->config->item("usuarioEmail");
     }
     public function enviar_mail_reestablecer_password($destinatarios,$asunto,$cuerpo) {
-        $body=$this->CI->load->view("template/email/email_reestablecer_password",$cuerpo,TRUE);
-        $body=preg_replace('/\\\\/',"",$body);
-        $result=$this->CI->email
-                    ->from($this->cuentaEmail,$this->usuarioEmail)
-                    ->reply_to($this->cuentaEmail)
-                    ->to($destinatarios)
-                    ->subject($asunto)
-                    ->message($body)
-                    ->send();
-        if ($result) {
-            return true;
-        } else {
-            return false;
+        try {
+            $body=$this->CI->load->view("template/email/email_reestablecer_password",$cuerpo,TRUE);
+            $body=preg_replace('/\\\\/',"",$body);
+            $result=$this->CI->email
+                        ->from($this->cuentaEmail,$this->usuarioEmail)
+                        ->reply_to($this->cuentaEmail)
+                        ->to($destinatarios)
+                        ->subject($asunto)
+                        ->message($body)
+                        ->send();
+            if ($result) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
         }
     }
     public function enviar_mail_contactos($destinatarios,$asunto,$cuerpo) {
@@ -36,9 +40,9 @@ Class Emailnotificaciones_cls {
                         ->message($body)
                         ->send();
             if ($result) {
-                return true;
+                return TRUE;
             } else {
-                return false;
+                return FALSE;
             }
         } catch (Exception $e) {
             return $e->getMessage();
