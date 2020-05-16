@@ -1,0 +1,143 @@
+@media print {
+    body {
+        /* Doesn't work yet. */
+        -webkit-print-color-adjust: exact;
+    }
+
+    section {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 0) 
+    }
+}    
+
+@media screen {
+    section {
+        margin-left: 10mm;
+    }
+
+    /*section {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) 
+    }*/
+}
+
+@page {
+  size: letter landscape;
+  /*
+  margin-left: 3cm;
+  margin-right: 3cm;
+  */
+}
+
+body {
+    margin-top: 20mm;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 4mm;
+    text-align: center;
+}
+
+h1 {
+    margin-top: -8mm;
+    font-weight: 400;
+}
+
+div {
+    margin-bottom: 4mm;
+}
+
+#name {
+    font-size: 10mm;
+    font-family: 'Oleo Script', cursive;
+}
+
+#title {
+    font-size: 8mm;
+    font-weight: 700;
+}
+
+#description {
+    margin: 0 auto 10mm auto;
+    width: 160mm;
+    height: 10mm;
+    text-align: left;
+}
+
+section {
+    width: 235mm;
+}
+
+.rect {
+    width: 235mm;
+    height: 2mm;
+}
+
+.container-logo {
+    /*background-color: gray;*/
+    height: 40mm;
+    position: relative;
+}
+
+.col-4 {
+    display: inline-block;
+    width: 77mm;
+}
+
+.col-3 {
+    display: inline-block;
+    width: 58mm;
+}
+
+.col-6 {
+    display: inline-block;
+    width: 115mm;
+}
+
+.container-signature {
+    /*background-color: gray;*/
+    height: 20mm;
+    position: relative;
+}
+
+.signatures {
+    margin-bottom: 5mm;
+}
+
+.signature {
+    height: 20mm;
+}
+
+.left-logo {
+    height: 17mm;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center-logo {
+    height: 30mm;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.right-logo {
+    height: 15mm;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.vertical-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+/* Programmatic blue rect */
+/*background-image: linear-gradient(-90deg, #3A98C3 0%, #A0D3F2 100%);*/
