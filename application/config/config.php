@@ -10,9 +10,9 @@ $config["mensaje404"]="Usted subestima el poder del lado oscuro";
 date_default_timezone_set("America/Lima");
 
 /*	DEVELOP 	*/
-//$urlBase=(isset($_SERVER['HTTPS'])?"https://":"http://").$_SERVER['HTTP_HOST']."/dr-teach"; /* LOCAL */
+//$urlBase="http://".$_SERVER['HTTP_HOST']."/dr-teach";/* LOCAL */
 /*	PRODUCTION 	*/
-$urlBase=(isset($_SERVER['HTTPS'])?"https://":"http://").$_SERVER['HTTP_HOST']; /* HEROKU */
+$urlBase="https://dr-teach.herokuapp.com/"; /* HEROKU */
 
 $config["base_url"]=$urlBase;
 $config['index_page']='index.php';
