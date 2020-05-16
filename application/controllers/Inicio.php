@@ -17,12 +17,13 @@
         $this->load->view("template/template", $this->data);
     }
     public function configurarCaptcha() {
+        desactivar_errores();
         $configuracionCaptcha = $this->config->item("configuracion");
         $configuracionCaptcha["img_url"] = base_url() . "static/captcha_images/";
         $configuracionCaptcha["font_path"] = base_url("system/fonts/texb.ttf");
         $captcha = create_captcha($configuracionCaptcha);
         $this->session->unset_userdata("codigoCaptcha");
-        $this->session->set_userdata("codigoCaptcha", $captcha["word"]);
+        $this->session->set_userdata("codigoCaptcha",$captcha["word"]);
         return $captcha;
     }
     public function actualizarCaptcha() {
@@ -44,17 +45,13 @@
         $data["login_fb_url"]=$this->facebook->loginURL(site_url("inicio/facebookLogin"));
         $this->load->view("inicio/login",$data);
     }
-    public function validarUsuario($email,$password,$recordarme,$ajax) {
+    public function validarUsuario($email,$password,$recordarme) {
         $usuario = $this->usuario_model->validar_usuario($email, $password);
         if (isset($usuario)&&$usuario["id_usuario"]!="") {
             $this->setearSesion($usuario,$recordarme);
-            if ($ajax == true) {
-                $json=array("resultado" => true, "mensaje" => "Exito en Login.");
-            } else {
-                $json=array("resultado" => false, "mensaje" => "No es por Ajax.Por favor inténtelo nuevamente o sírvase comunicarse con el administrador del Sistema.");
-            }
+            $json=array("resultado"=>true,"mensaje"=>"Exito en Login.");
         } else {
-            $json = array("resultado" => false, "mensaje" => "Email, Usuario o Password Incorrectos  o el Usuario NO se encuentra Activo. Por favor inténtelo nuevamente o sírvase comunicarse con el administrador del Sistema.");
+            $json = array("resultado"=>false,"mensaje"=>"Email, Usuario o Password Incorrectos  o el Usuario NO se encuentra Activo. Por favor inténtelo nuevamente o sírvase comunicarse con el administrador del Sistema.");
         }
         return $json;
     }
@@ -85,21 +82,20 @@
     }
     public function verificarAcceso() {
         desactivar_errores();
-        $ajax = $this->input->get("ajax");
         $this->load->library("encryption");
-        $email = $this->input->post("email");
+        $email=$this->input->post("email");
         $password = sha1($this->input->post("password"));
         $recordarme = $this->input->post("recordarme");
         $recaptcha = $this->input->post("g-recaptcha-response");
-        if (isset($recaptcha) && !empty($recaptcha)) {
+        if (isset($recaptcha)&&!empty($recaptcha)) {
             $response = $this->recaptcha->verifyResponse($recaptcha);
-            if (isset($response["success"]) && $response["success"] === true) {
-                $json = $this->validarUsuario($email, $password, $recordarme, $ajax);
+            if (isset($response["success"]) && $response["success"]===true) {
+                $json=$this->validarUsuario($email,$password,$recordarme);
             } else {
-                $json = array("resultado" => false, "mensaje" => "Re-Captcha Incorrecto, detalle:" . json_encode($response["error-codes"]));
+                $json = array("resultado"=>false,"mensaje"=>"Re-Captcha Incorrecto, detalle:".json_encode($response["error-codes"]));
             }
         } else {
-            $json = array("resultado" => false, "mensaje" => "Re-Captcha Incorrecto o vacío.");
+            $json = array("resultado"=>false,"mensaje"=>"Re-Captcha Incorrecto o vacío.");
         }
         $this->setHeaders();
         print(json_encode($json));
@@ -173,7 +169,6 @@
     }
     public function registrarUsuario() {
         desactivar_errores();
-        $ajax = $this->input->get("ajax");
         $nombres = $this->input->post("nombres");
         $apellidos = $this->input->post("apellidos");
         $email = $this->input->post("email_registro");
@@ -181,23 +176,19 @@
         $password = sha1($password);
         $captchaStr = $this->input->post("captcha");
         $captchaSesion = $this->session->userdata("codigoCaptcha");
-        if (strcasecmp($captchaStr, $captchaSesion) == 0) {
+        if (strcasecmp($captchaStr,$captchaSesion)==0) {
             if (isset($nombres) && isset($email)) {
-                if ($ajax == true) {
-                    $usuario = $this->usuario_model->validar_usuario_email($email);
-                    if (isset($usuario) && $usuario["email"] != "" && strcasecmp($usuario["email"], $email) === 0) {
-                        $usuario["nombresCompletos"] = $usuario["nombres"] . " " . $usuario["apellidos"];
-                        $json = array("resultado" => false, "mensaje" => "El Usuario: " . $usuario["nombresCompletos"] . ", con el Email: " . $usuario["email"] . ", ya se encuentra registrado.");
-                    } else {
-                        $registro = $this->usuario_model->registrar_usuario($email, $password, $email, $nombres, $apellidos);
-                        $nombresCompletos = $nombres . " " . $apellidos;
-                        if ($registro)
-                            $json = array("resultado" => true, "mensaje" => "Se registro al Usuario: " . $nombresCompletos . ", con el Email: " . $email);
-                        else
-                            $json = array("resultado" => false, "mensaje" => "Ourrió algun error al Registrar al Usuario. Por favor inténtelo nuevamente o sírvase comunicarse con el administrador del Sistema.");
-                    }
+                $usuario = $this->usuario_model->validar_usuario_email($email);
+                if (isset($usuario) && $usuario["email"] != "" && strcasecmp($usuario["email"], $email) === 0) {
+                    $usuario["nombresCompletos"] = $usuario["nombres"] . " " . $usuario["apellidos"];
+                    $json = array("resultado" => false, "mensaje" => "El Usuario: " . $usuario["nombresCompletos"] . ", con el Email: " . $usuario["email"] . ", ya se encuentra registrado.");
                 } else {
-                    $json = array("resultado" => false, "mensaje" => "No es por Ajax. Por favor inténtelo nuevamente o sírvase comunicarse con el administrador del Sistema.");
+                    $registro = $this->usuario_model->registrar_usuario($email, $password, $email, $nombres, $apellidos);
+                    $nombresCompletos = $nombres . " " . $apellidos;
+                    if ($registro)
+                        $json = array("resultado" => true, "mensaje" => "Se registro al Usuario: " . $nombresCompletos . ", con el Email: " . $email);
+                    else
+                        $json = array("resultado" => false, "mensaje" => "Ourrió algun error al Registrar al Usuario. Por favor inténtelo nuevamente o sírvase comunicarse con el administrador del Sistema.");
                 }
             } else {
                 $json = array("resultado" => false, "mensaje" => "Nombres y Email no ingresados.");

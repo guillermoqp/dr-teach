@@ -33,10 +33,9 @@ class Pdf extends DOMPDF
 	 * @param   array   $data The view data
 	 * @return  void
 	 */
-	public function load_view($view,$data=array(),$nombrePDF)
-	{
-	    $dompdf = new Dompdf();
-	    $html = $this->ci()->load->view($view,$data,TRUE);
+	public function load_view($view,$data=array(),$nombrePDF){
+	    $dompdf=new Dompdf();
+	    $html=$this->ci()->load->view($view,$data,TRUE);
 	    $dompdf->loadHtml($html);
 	    $dompdf->setPaper("A4","landscape");
 	    $dompdf->render();

@@ -145,7 +145,8 @@
             date_default_timezone_set("America/Lima");
             $certificado=$this->certificado_model->obtener_certificado_usuario_curso($this->session->userdata("usuario")["id_usuario"],$curso["id_curso"]);
             if (null!=$certificado&&null!=$certificado["id_certificado"]&&$certificado["id_certificado"]!="") {
-                $fecha=strftime(" %A, %e de %B de %Y .",string_to_timestamp("Y-m-d H:i:s",$certificado["fecha_creacion"]));/*string_to_timestamp("Y-m-d H:i:s",$certificado["fecha_creacion"]) time()*/
+                $fecha=strftime(" %A, %e de %B de %Y .",string_to_timestamp("Y-m-d H:i:s",$certificado["fecha_creacion"]));
+                /*string_to_timestamp("Y-m-d H:i:s",$certificado["fecha_creacion"]) time()*/
                 //var_dump(stringDate_to_strftime($certificado["fecha_creacion"]));
                 //var_dump(strftime("%V,%G,%Y",strtotime("12/23/2004")) );
                 $preFirma=$this->config->item("datosConfiguracion")["prefirmaUbicacionCertificados"].$fecha;
@@ -158,8 +159,8 @@
                     "firma"=>$this->config->item("datosConfiguracion")["firmaCertificados"]
                 );
                 //VISTAS : template/certificado/curso_completado , curso_completado_basic
-                $this->pdf->load_view("template/certificado/curso_completado",$datosCertificado,"Certificado_".$nombreCurso);
-                //var_dump($datosCertificado);
+                //$this->pdf->load_view("template/certificado/curso_completado",$datosCertificado,"Certificado_".$nombreCurso);
+                var_dump($datosCertificado);
             } else {
                 $this->session->set_flashdata("error","Error, aun no ha generado un Certificado.");
                 redirect(base_url("cursos/".$codigoCurso));

@@ -101,7 +101,7 @@ var Login = function() {
                 },
                 submitHandler: function(form) {
                     var datos=$(form).serialize();
-                    console.log(" reminder : datos :"+JSON.stringify(datos));
+                    console.log(" re-establecer : datos :"+JSON.stringify(datos));
                     reestablecerPassword(form);
                 },
                 rules: {
@@ -134,7 +134,7 @@ var Login = function() {
                 },
                 submitHandler: function(form) {
                     var datos=$(form).serialize();
-                    console.log(" register: datos :"+JSON.stringify(datos));
+                    console.log(" registrar: datos :"+JSON.stringify(datos));
                     registrarUsuario(form);
                 },
                 rules: {
