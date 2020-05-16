@@ -140,7 +140,7 @@
         desactivar_errores();
         $curso=$this->curso_model->obtener_curso_uri($codigoCurso);
         if (null!==$curso&&null!==$curso["id_curso"]&&$curso["id_curso"]!="") {
-            $this->load->library("pdf");
+            //$this->load->library("pdf");
             setlocale(LC_TIME,"es_ES");
             date_default_timezone_set("America/Lima");
             $certificado=$this->certificado_model->obtener_certificado_usuario_curso($this->session->userdata("usuario")["id_usuario"],$curso["id_curso"]);
