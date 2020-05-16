@@ -134,7 +134,7 @@
                     $exito=$this->usuario_model->generar_cambio_password($usuario["id_usuario"], $forgot_password_code);
                     $json=array("resultado"=>true, "mensaje" => "Éxito se envio un email para reestablecer Password a : " . $email);
                 } else {
-                    $json = array("resultado" => false, "mensaje" => "Ocurrio un error al re-establecer Password. Detalle: ".$envio_email." Por favor inténtelo nuevamente o sírvase comunicarse con el administrador del Sistema.");
+                    $json = array("resultado" => false, "mensaje" => "Ocurrio un error al re-establecer Password. Detalle: ".$envio_email.". Por favor inténtelo nuevamente o sírvase comunicarse con el administrador del Sistema.");
                 }
             } else {
                 $json = array("resultado" => false, "mensaje" => "Ya se ha enviado un mail de Re-Establecimiento de Password, el cual tiene un Código de Expiración de 1 dia.");

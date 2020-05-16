@@ -2,7 +2,7 @@
 $config=array(
 	"useragent"=>"PHPMailer",
 	"protocol"=>"smtp",
-	"mailpath"=>"C:\xampp\mailtodisk\mailtodisk.exe",
+	//"mailpath"=>"C:\xampp\mailtodisk\mailtodisk.exe",
 	"smtp_host"=>"smtp.gmail.com",
 	"smtp_user"=>"dr.teach.peru@gmail.com",
 	"smtp_pass"=>"Guillermo210393$",
