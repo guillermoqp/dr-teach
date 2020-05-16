@@ -9,7 +9,6 @@
         $this->load->helper("utilitarios");
         $this->load->helper("guidV4");
         $this->load->helper("captcha");
-        $this->load->helper("log4php");
     }
     public function index() {
         verificar_sesion($this->session->userdata());
