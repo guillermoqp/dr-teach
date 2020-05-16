@@ -188,7 +188,7 @@
         if (sizeof($cursos)<=0) {
             $this->session->set_flashdata("error","Error, no tiene una SUSCRIPCION activa.");
         }
-        $this->data["view"]="cursos/mis_Cursos";
+        $this->data["view"]="cursos/mis_cursos";
         $this->load->view("template/template",$this->data);
     }
 }
